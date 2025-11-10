@@ -1,0 +1,320 @@
+/* Text color for dropdown items */
+.custom-dropdown .dropdown-item {
+    color: white;
+    background-color: #28a745; /* green */
+}
+
+/* Hover effect for items */
+.custom-dropdown .dropdown-item:hover {
+    background-color: #218838; /* darker green */
+    color:white;
+}
+
+/*login and register button hover effect*/
+.navbar .btn-hover {
+    transition: 0.3s; /* smooth effect */
+    font-weight: bold;
+}
+
+.navbar .btn-hover:hover {
+    background-color: yellowgreen; /* change background on hover */
+    color: white;              /* change text color on hover */
+}
+
+/* fruit img */
+.custom-img{
+    height: 285px;
+}
+
+/* about page team image*/
+.team-img {
+    width: 120px;       /* adjust size as needed */
+    height: 120px;      /* keep it square for a perfect circle */
+    object-fit: cover;  /* crop if image is not square */
+}
+
+/*welcome page carousel*/
+.carousel-caption{
+    align-items: center;          /* Vertically center content */
+    justify-content: center;      /* Horizontally center content */
+    position: relative;
+
+}
+
+.carousel-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.4); /* Optional overlay for text readability */
+}
+
+/* Rounded corners for the carousel container */
+#heroCarousel {
+    border-radius: 10px; /* adjust the radius as you like */
+    overflow: hidden;    /* ensures images are clipped to the corners */
+}
+
+/*about page*/
+.hero-section .about-section{
+    display: flex;  
+    flex-direction: column;       /* stack text vertically */
+    align-items: center;
+    justify-content: center;      /* Horizontally center content */
+    position: relative;
+    height: 100%;
+    
+}
+
+/*contact page*/
+
+.contact-section{
+    position: relative;
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 300px;
+
+    border-radius: 20px;   /* round the corners */
+    overflow: hidden;      /* clip the background image inside rounded corners */
+}
+
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.4); /* Optional overlay for text readability */
+    z-index: 1;
+}
+
+.contact-section .container {
+    position: relative;
+    z-index: 2; /* Keep text above overlay */
+}
+
+/*login button on login form*/
+button.btn-custom.btn-success {
+    transition: 0.3s; /* smooth hover effect */
+    font-weight: bold;
+    border: none;
+}
+
+/* On hover */
+button.btn-custom.btn-success:hover {
+    background-color: yellowgreen;
+    color: white;
+}
+
+/*back button on login form*/
+a.btn-back.btn-warning {
+    transition: 0.3s; /* smooth hover effect */
+    font-weight: bold;
+    border: none;
+}
+
+a.btn-back.btn-warning:hover{
+    background-color: orange;
+    color: white;
+}
+
+/*footer*/
+footer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+/*search button effect*/
+.btn-search {
+    transition: all 0.3s; /* smooth effect */
+    background-color: whitesmoke;
+    font-size: 0.85rem;
+    font-family:monospace;
+    padding: 0.5rem 0.5rem; /* smaller top/bottom and left/right */
+}
+
+.btn-search:hover { /* new background on hover */
+    color: black;
+    background-color: white;             /* new text color on hover */
+}
+
+/*hamburger button*/
+.btn-ham{
+    padding: 0.1rem 0.4rem;
+}
+
+/*sidebar size*/
+#adminSidebar{
+  width: 280px;   /* change this to any size */
+  max-width: 80%; /* optional, to keep it responsive */
+}
+
+#userSidebar{
+  width: 250px;   /* change this to any size */
+  max-width: 80%; /* optional, to keep it responsive */
+}
+
+/*back button on create product form*/
+.custom-hover{
+    transition: 0.3s; /* smooth hover effect */
+    font-weight: bold;
+    border: none;   
+}
+
+.custom-hover:hover{
+    background-color: orange;
+    color: white;   
+}
+
+/*invalid text on create product form*/
+.custom-invalid{
+    color: orange;
+}
+
+/*save button on create product form*/
+.custom-save{
+    font-weight: bold;
+}
+
+.custom-save:hover{
+    background-color: white;
+}
+
+/* product index page button*/
+.index-btn{
+    font-weight: bold;
+}
+
+/*product image on user page*/
+.product-image {
+    width: 100%;          /* fill the card width */
+    height: 200px;        /* fixed height for all cards */
+    object-fit: cover;    /* crop/scale image to fit nicely */
+}
+
+
+/* Hide default spinner arrows in number inputs (cross-browser safe) */
+input[type=number] {
+  appearance: textfield;        /* ✅ Standard property */
+  -webkit-appearance: none;     /* ✅ Chrome, Safari, newer Edge */
+  -moz-appearance: textfield;   /* ✅ Firefox */
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Height of first navbar (adjust as needed) */
+.navbar.bg-success {
+    height: 60px;
+}
+
+/* Place the second navbar directly below the first one */
+.second-navbar {
+    top: 60px;  /* same as height of first navbar */
+    z-index: 1020; /* stay above content */
+
+}
+
+.second-navbar .navbar-nav {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Push the page content down below both navbars */
+.page-content {
+    margin-top: 140px; /* height of both navbars combined */
+}
+
+.second-navbar .nav-link {
+    position: relative;
+    color: #198754;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+}
+
+/* Underline only text */
+.second-navbar .nav-text {
+    position: relative;
+    display: inline-block;
+}
+
+.second-navbar .nav-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #198754;
+    transition: width 0.3s ease;
+}
+
+.second-navbar .nav-link:hover .nav-text,
+.second-navbar .nav-link:focus .nav-text {
+    color: #145c32;
+    text-decoration: none; 
+}
+
+.second-navbar .nav-link:hover .separator,
+.second-navbar .nav-link:focus .separator {
+  color: #198754;               /* green */
+  transform: scale(1.05);       /* tiny pop */
+  text-shadow: 0 0 5px #198754; /* subtle glow */
+  opacity: 1;
+}
+
+.second-navbar .nav-link:hover .nav-text::after,
+.second-navbar .nav-link:focus .nav-text::after {
+    width: 100%;
+}
+
+/* Separator hover */
+.second-navbar .separator {
+    color: #6c757d; /* Bootstrap secondary */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    user-select: none;
+}
+
+/* When link is hovered, affect separators beside it */
+.second-navbar .nav-item:hover + .separator,
+.second-navbar .separator:hover,
+.second-navbar .separator:has(+ .nav-item:hover) {
+    color: #198754;
+    transform: scale(1.1);
+    text-shadow: 0 0 4px #198754;
+}
+
+
+.second-navbar .separator:hover {
+    color: #198754;
+    text-shadow: 0 0 5px #198754;
+    transition: all 0.3s ease;
+}
+
+/* Transparent dropdown */
+.profile-dropdown {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+    
+.profile-dropdown .dropdown-item {
+    color: #212529;
+}
+
+.profile-dropdown .dropdown-item:hover {
+    background-color: #1987541a;
+}
+
+.second-navbar .nav-link.active {
+    background-color: rgba(25,135,84,0.15);
+    border-radius: 8px;
+    color: #198754;
+}
