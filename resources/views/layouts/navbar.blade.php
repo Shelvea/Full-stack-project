@@ -6,7 +6,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    @vite('resources/css/app.css') <!-- Include your app.css -->
+    <!-- Include your app.css -->
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -100,6 +101,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    
+    @stack('scripts')
 </body>
 </html>

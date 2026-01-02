@@ -1,7 +1,20 @@
 <x-app-layout>
     <x-slot name="title">Fruits</x-slot>
+    
+    @if(request('search'))
+    <p class="text-muted">
+        Showing results for "<strong>{{ request('search') }}</strong>"
+    </p>
+    @endif
+
     <div class="container mt-5 pt-5">
         <h3 class="text-success">Fruits</h3>
+
+    @if($products->count() === 0)
+    <div class="alert alert-warning">
+        No products found.
+    </div>
+    @endif
 
         {{-- Flash message --}}
     @if(session('success'))

@@ -1,0 +1,59 @@
+services:
+    #PHP service container
+    online_shop:
+        build:
+            args:
+                user: online_shop_user
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: online_shop_image
+        container_name: online_shop_container
+        restart: unless-stopped
+        ports:
+            - "5173:5173"
+        #depends_on: 
+        #    - online_shop_mysql
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - online_shop_network
+    #nginx service
+    online_shop_webserver:
+        image: nginx:alpine
+        container_name: online_shop_webserver_container        
+        restart: unless-stopped
+        ports:
+            - "6162:80"
+        depends_on:
+            - online_shop
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx/:/etc/nginx/conf.d
+        networks:
+            - online_shop_network           
+
+    #mysql service
+    #online_shop_mysql:
+    #   image: mysql:8.0
+    #   container_name: online_shop_mysql_container
+    #   restart: unless-stopped
+    #   ports:
+    #      - "3306:3306"
+    # environment:
+    #     MYSQL_ROOT_PASSWORD: h9003*9Hn
+    #     MYSQL_DATABASE: online-shop
+    # volumes:
+    #     - online_shop_mysql_data:/var/lib/mysql
+    # networks:
+    #     - online_shop_network
+
+volumes:
+    online_shop_mysql_data:
+        driver: local
+
+networks:
+    online_shop_network:
+        driver: bridge
+

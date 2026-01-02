@@ -9,8 +9,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return view('welcome_new');
@@ -41,7 +43,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function(){
     //delete an existing product
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
     
-    //manage orders - display all orders
+    //manage orders - display all orders //viewing order page by route to order management page with highlight effect
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
     //view delivery details include sharelink of specific order id
     Route::get('/delivery/{orderId}', [OrderController::class, 'delivery'])->name('admin.orders.delivery');
@@ -83,8 +85,20 @@ Route::prefix('user')->middleware(['auth', 'verified'])->group(function(){
     //show user's order
     Route::get('/my-orders/{status?}', [OrderController::class, 'indexUser'])->name('order.indexUser');
 
+    //show user's payment
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+
 });
 
+//Route::get('/inertia', function () {
+//    return Inertia::render('Welcome');
+//});
+
+//Route::get('/users', fn () => view('app'))->name('app');
+
+//Route::get('/users', function(){
+//    return view('vue');
+//})->name('app');
 
 Route::get('/login', function(){
     return view('login');
@@ -122,3 +136,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// SPA fallback route (LAST)
+Route::get('/app/{any?}', function () {
+    return view('vue'); // your Blade shell
+})->where('any', '.*')->name('app');//for SPA Vue route behavior

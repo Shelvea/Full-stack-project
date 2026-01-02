@@ -111,16 +111,27 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success','Product deleted successfully');
     }
 
-    public function fruits(){
+    public function fruits(Request $request){
 
-        $products = Product::where('category_id', 1)->paginate(6);
+        $search = $request->query('search');
+
+        $products = Product::where('category_id', 1)->when($search, function ($q) use ($search) {
+            $q->where('name', 'LIKE', "%{$search}%");
+        })
+        ->paginate(6)
+        ->withQueryString();
 
         return view('customer.products.fruits', compact('products'));
     }
 
-    public function vegetables(){
+    public function vegetables(Request $request){
         
-        $products = Product::where('category_id', 2)->paginate(6);
+        $search = $request->query('search');
+
+        $products = Product::where('category_id', 2) ->when($search, function ($q) use ($search) {
+            $q->where('name', 'LIKE', "%{$search}%");
+        })->paginate(6)
+        ->withQueryString();
 
         return view('customer.products.vegetables', compact('products'));
     }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid p-0">    
 <!-- Hero Section -->
-<section class="hero-section text-white text-center py-5 mb-4" style="background-image: url('https://images.unsplash.com/photo-1567306226416-28f0efdc88ce'); background-size: cover; background-position: center; height: 400px; border-radius: 20px; overflow: hidden; ">
+<section class="hero-section text-white text-center py-5 mb-4 fade-in" style="background-image: url('https://images.unsplash.com/photo-1567306226416-28f0efdc88ce'); background-size: cover; background-position: center; height: 400px; border-radius: 20px; overflow: hidden; ">
     <div class="container about-section">
         <h1 class="display-4 fw-bold">About FreshMart</h1>
         <p class="lead">Delivering fresh, organic fruits and vegetables straight from the farm to your table.</p>
@@ -11,7 +11,7 @@
 </section>
 
 <!-- Our Story -->
-<section class="py-5 bg-light">
+<section class="py-5 bg-light fade-in">
     <div class="container">
         <h2 class="mb-4 text-center">Our Story</h2>
         <p class="text-center">FreshMart started with a simple mission: to provide healthy, high-quality produce at affordable prices. We partner directly with local farmers to ensure every fruit and vegetable you receive is fresh, nutritious, and grown sustainably. Our goal is to bring the taste of farm-fresh products to your home every day.</p>
@@ -21,8 +21,8 @@
 <!-- Our Values -->
 <section class="py-5 text-center">
     <div class="container">
-        <h2 class="mb-4">Our Values</h2>
-        <div class="row">
+        <h2 class="mb-4 fade-in">Our Values</h2>
+        <div class="row fade-in">
             <div class="col-md-4 mb-4">
                 <i class="bi bi-leaf display-4 text-success"></i>
                 <h5 class="mt-3">Organic</h5>
@@ -45,8 +45,8 @@
 <!-- Team / Optional Images -->
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="mb-4 text-center">Meet Our Team</h2>
-        <div class="row justify-content-center">
+        <h2 class="mb-4 text-center fade-in">Meet Our Team</h2>
+        <div class="row justify-content-center fade-in">
             <div class="col-md-3 text-center mb-4">
                 <img src="https://newyork2024.advertisingweek.com/images/app_images/speakers_crop_13566.jpg" class="rounded-circle mb-2 team-img" alt="Team Member">
                 <h6>Jane Doe</h6>
@@ -63,3 +63,41 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+
+const appearOptions = {
+  threshold: 0,
+  rootMargin: "0px 0px -300px 0px"
+};
+
+const faders = document.querySelectorAll(".fade-in");
+
+const appearOnScroll = new IntersectionObserver(function(
+  entries,
+  appearOnScroll
+) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) {
+      return;
+    } else {
+      entry.target.classList.add("appear");
+      appearOnScroll.unobserve(entry.target);
+    }
+  });
+},
+appearOptions);
+
+faders.forEach(fader => {
+  appearOnScroll.observe(fader);
+});
+
+const sliders = document.querySelectorAll(".slide-in");
+
+sliders.forEach(slider => {
+  appearOnScroll.observe(slider);
+});
+
+</script>
+@endpush

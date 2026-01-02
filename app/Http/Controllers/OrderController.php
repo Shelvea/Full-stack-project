@@ -11,16 +11,37 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $highlightId = $request->query('highlight');
         // Get all orders with their order items and related product data
         $orders = Order::with('orderItems.product')->orderByDesc('created_at')->paginate(5);
         
+        if ($highlightId) {
+        // find the position of the order
+        $position = Order::latest()
+            ->pluck('id')
+            ->search((int)$highlightId);
+
+        if ($position !== false) {
+            $page = floor($position / $orders->perPage()) + 1;
+
+            // redirect to correct pagination page
+            if ($page != $orders->currentPage()) {
+                return redirect()->route('admin.orders.index', [
+                    'page' => $page,
+                    'highlight' => $highlightId
+                ]);
+            }
+        }
+    }
+
         // Pass to view
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders', 'highlightId'));
 
     }
+
 public function indexUser(Request $request)
 {
     $userId = Auth::id();
@@ -82,65 +103,7 @@ public function indexUser(Request $request)
     ]);
 }
 
-    /*public function indexUser(Request $request)
-    {
-        // Get the currently logged-in user's ID
-        $userId = Auth::id();
 
-        $status = $request->status ?? 'pending';
-
-        // Group statuses that use the same view
-        $pendingShipmentStatuses = ['pending', 'Confirmed', 'Processing', 'Ready for Delivery'];
-
-        // Normalize status for comparison (trim and lowercase only for checking)
-        $statusNormalized = strtolower(trim($status));
-
-        // Check if status belongs to pending-shipment group
-    $pendingShipmentNormalized = array_map('strtolower', $pendingShipmentStatuses);
-
-
-        // If status belongs to any of those, show the same view
-    if (in_array($statusNormalized, $pendingShipmentNormalized)) {
-        $orders = Order::where('user_id', $userId)
-                        ->whereIn('status', $pendingShipmentStatuses)
-                        ->with('orderItems.product')
-                        ->orderByDesc('created_at')
-                        ->paginate(5);
-
-        return view('partials.pending_shipment', compact('orders','status'));
-    }
-
-        // Retrieve all orders that belong to that user
-        $orders = Order::where('user_id', $userId)
-                    ->where('status', $status)
-                    ->with('orderItems.product') // include related items (optional)
-                    ->orderByDesc('created_at')
-                    ->paginate(5); // optional pagination
-    
-        // Load specific view by status
-    switch ($status) {
-        
-        case 'pending payment':
-            return view('partials.pending_payment', compact('orders','status'));
-
-        case 'On the Way':
-            return view('partials.on_the_way', compact('orders','status'));
-
-        case 'Completed':
-            return view('partials.order_completed', compact('orders','status'));
-
-        case 'Returned':
-            return view('partials.returned_goods_or_refunds', compact('orders','status'));
-
-        case 'Cancelled':
-            return view('partials.cancelled', compact('orders','status'));
-
-        default:
-            // fallback to pending_shipment page if status pending
-            return view('partials.pending_shipment', compact('orders','status'));
-    }
-
-    }*/
 
     public function delivery($orderId)
     {

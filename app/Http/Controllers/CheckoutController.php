@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Str;
+use App\Notifications\OrderPlaced;
+use App\Models\User;
 
 class CheckoutController extends Controller
 {
@@ -172,6 +174,12 @@ class CheckoutController extends Controller
             $cart->cartItems()->delete();
         }
         
+    // Notify admin(s) - ORDER PLACED notification
+    User::where('is_admin', true)
+        ->each(function ($admin) use ($order) {
+        $admin->notify(new OrderPlaced($order));
+    });
+
         // Commit if everything succeeded
         DB::commit();
         

@@ -35,8 +35,13 @@
             </ul>
 
             @can('is_user')
-            <form class="d-flex mx-auto" style="max-width: 500px; width:100%">
-                <input class="form-control me-2" type="text" placeholder="Search">
+            <form id="global-search-form" class="d-flex mx-auto position-relative" style="max-width: 500px; width:100%">
+                <input id="global-search" class="form-control me-2" type="text" placeholder="Search" autocomplete="off">
+                <!-- Dropdown -->
+            <div id="search-dropdown"
+            class="list-group position-absolute w-100 shadow"
+            style="top:100%; z-index:1000; display:none;">
+            </div>
                 <button class="btn btn-light btn-search" type="submit">Search</button>
             </form>
             @endcan
@@ -83,6 +88,7 @@
             <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('products.vegetables') }}"><i class="fas fa-carrot me-2"></i> Vegetables</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('cart.index') }}"><i class="fas fa-shopping-cart me-2"></i> Cart</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('order.indexUser') }}"><i class="fas fa-box me-2"></i> Orders</a></li>
+            <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('payment.index') }}"><i class="fas fa-credit-card me-2"></i> Payment</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-undo-alt me-2"></i> Returns / Refunds</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-headset me-2"></i> Help & Support</a></li>
         </ul>
@@ -102,13 +108,12 @@
         <ul class="nav flex-column">
             <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-chart-line me-2"></i>Sales & Analytics</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i>View Customer Dashboard</a></li>
-            <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-bell me-2"></i>Notifications</a></li>
+            <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('app', ['any' => 'notification']) }}"><i class="fas fa-bell me-2 position-relative"><!-- Badge --><span id="notification-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">1</span></i>Notifications</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('admin.products.index') }}"><i class="fas fa-boxes me-2"></i>Product Management</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('admin.orders.index') }}"><i class="fas fa-clipboard-list me-2"></i>Order Management</a></li>
-            <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-warehouse me-2"></i>Inventory & Stock Control</a></li>
-            <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-users me-2"></i>Customer Management</a></li>
+            <li class="nav-item mb-2"><a class="nav-link text-white" href="{{ route('app', ['any' => 'users']) }}"><i class="fas fa-users me-2"></i>Customer Management</a></li>
+            <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-credit-card me-2"></i> Payment</a></li>
             <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-undo-alt me-2"></i>Returns / Refunds</a></li>
-            <li class="nav-item mb-2"><a class="nav-link text-white" href="#"><i class="fas fa-user-cog me-2"></i>Profile & Settings</a></li>
         </ul>
     </div>
 </div>

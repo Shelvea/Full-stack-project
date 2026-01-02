@@ -1,10 +1,10 @@
 @extends('layouts.navbar')
 
 @section('content')
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 welcome-new">
         
     <!-- Carousel -->
-<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+<div id="heroCarousel" class="carousel slide fade-in" data-bs-ride="carousel">
 
     <!-- Indicators/dots -->
 <div class="carousel-indicators">
@@ -54,7 +54,7 @@
 </div>
 
     <!-- About Us -->
-    <section class="py-5 text-center">
+    <section class="py-5 text-center fade-in" >
         <div class="container">
             <h2 class="mb-4">About Us</h2>
             <p class="lead">At <strong>FreshMart</strong>, we believe in bringing you only the best — hand-picked fruits and vegetables that are fresh, nutritious, and delivered with care. Whether you need juicy fruits or green veggies, we’ve got you covered.</p>
@@ -64,9 +64,9 @@
     <!-- Categories -->
     <section class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-4">Shop by Category</h2>
+            <h2 class="text-center mb-4 fade-in">Shop by Category</h2>
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4 slide-in from-left">
                     <div class="card shadow-sm h-100">
                         <img src="https://img.freepik.com/premium-photo/fresh-fruit-background-as-healthy-eating-dieting-concept-winter-assortment-top-view_501761-506.jpg" class="card-img-top custom-img" alt="Fruits">
                         <div class="card-body text-center">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6 mb-4 slide-in from-right">
                     <div class="card shadow-sm h-100">
                         <img src="https://t4.ftcdn.net/jpg/03/20/39/89/360_F_320398931_CO8r6ymeSFqeoY1cE6P8dbSGRYiAYj4a.jpg" class="card-img-top" alt="Vegetables">
                         <div class="card-body text-center">
@@ -91,7 +91,7 @@
     </section>
 
     <!-- Featured Products -->
-    <section class="py-5">
+    <section class="py-5 slide-in from-left">
         <div class="container">
             <h2 class="text-center mb-4">Best Sellers</h2>
             <div class="row">
@@ -140,7 +140,7 @@
     </section>
 
     <!-- Why Choose Us -->
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-light slide-in from-right">
         <div class="container text-center">
             <h2 class="mb-4">Why Choose Us?</h2>
             <div class="row">
@@ -167,4 +167,40 @@
     </div>
 @endsection
 
+@push('scripts')
+<script>
 
+const appearOptions = {
+  threshold: 0,
+  rootMargin: "0px 0px -300px 0px"
+};
+
+const faders = document.querySelectorAll(".fade-in");
+
+const appearOnScroll = new IntersectionObserver(function(
+  entries,
+  appearOnScroll
+) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) {
+      return;
+    } else {
+      entry.target.classList.add("appear");
+      appearOnScroll.unobserve(entry.target);
+    }
+  });
+},
+appearOptions);
+
+faders.forEach(fader => {
+  appearOnScroll.observe(fader);
+});
+
+const sliders = document.querySelectorAll(".slide-in");
+
+sliders.forEach(slider => {
+  appearOnScroll.observe(slider);
+});
+
+</script>
+@endpush

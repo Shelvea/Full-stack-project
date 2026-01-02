@@ -1,5 +1,9 @@
 <x-app-layout>
 
+@php
+    $highlightId = request()->query('highlight');
+@endphp
+
 <x-slot name="title">Order List</x-slot>
 
 <x-slot name="header">
@@ -28,7 +32,7 @@
         </thead>
         <tbody>
             @forelse($orders as $order)
-                <tr>
+                <tr id="order-{{ $order->id }}" class="{{ $highlightId == $order->id ? 'table-warning' : '' }}">
                     <td>#{{ $order->id }}</td>
                     <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
                     <td>
@@ -190,6 +194,19 @@
         alert('An error occurred while updating the status');
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const highlightId = '{{ $highlightId }}';
+    if (!highlightId) return;
+
+    const row = document.getElementById(`order-${highlightId}`);
+    if (row) {
+        row.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+    }
+});
 
 </script>
 
