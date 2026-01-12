@@ -30,7 +30,7 @@ services:
             - online_shop
         volumes:
             - ./:/var/www
-            - ./docker-compose/nginx/:/etc/nginx/conf.d
+            - ./docker-compose/nginx:/etc/nginx/conf.d
         networks:
             - online_shop_network           
 

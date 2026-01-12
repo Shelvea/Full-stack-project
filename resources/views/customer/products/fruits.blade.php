@@ -7,27 +7,12 @@
     </p>
     @endif
 
-    <div class="container mt-5 pt-5">
+    <div class="container">
         <h3 class="text-success">Fruits</h3>
 
     @if($products->count() === 0)
     <div class="alert alert-warning">
         No products found.
-    </div>
-    @endif
-
-        {{-- Flash message --}}
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
 
@@ -44,7 +29,7 @@
                             <p>Stock: {{ $product->stock }}</p>
                             <strong>NT$ {{ number_format($product->price, 2) }}</strong>
                             
-                            @if($product->stock > 0)
+                            @if($product->stock > 0 && !Gate::allows('viewAsCustomer'))
                                 <!-- Quantity and Add to Cart -->
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-2 text-center">
                                     @csrf
@@ -57,7 +42,8 @@
                                     <button type="submit" class="btn btn-success w-100">Add to Cart</button>
                                     </div>
                                 </form>
-                            @else
+                                
+                            @elseif(!(Gate::allows('viewAsCustomer')))
                                 <button class="btn btn-secondary w-100 mt-auto" disabled>Out of Stock</button>
                             @endif
                             

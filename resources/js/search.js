@@ -1,24 +1,58 @@
-document.getElementById('global-search-form')
-    .addEventListener('submit', e => {
+document.addEventListener('DOMContentLoaded', async () => {
 
-        e.preventDefault();
-
-        const q = document.getElementById('global-search').value.trim();
-
-        if (!q) return;
-
-        // Redirect to full search page
-        window.location.href = `/user/fruits?search=${encodeURIComponent(q)}`;
-    });
-
-let debounceTimer = null;
-
-document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('global-search-form');
     const input = document.getElementById('global-search');
     const dropdown = document.getElementById('search-dropdown');
 
-    if (!input || !dropdown) return;
+    if (!form || !input || !dropdown) return;
 
+    let debounceTimer = null;
+
+    // -------------------------
+    // Submit (Search button / Enter)
+    // -------------------------
+    form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const q = input.value.trim();
+    if (!q) return;
+
+    try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {
+            headers: {'Accept': 'application/json' }, // <-- add this
+            credentials: 'include'
+        
+        });
+        const data = await res.json();
+
+        // 🔑 fallback if nothing found
+        if (!data.length) {
+            const fallback =
+                window.location.pathname.includes('vegetables')
+                    ? 'vegetables'
+                    : 'fruits';
+
+            window.location.href = `/user/${fallback}?search=${encodeURIComponent(q)}`;
+            return;
+        }
+
+        const item = data[0];
+
+        const url =
+            item.category === 'fruit'
+                ? `/user/fruits?search=${encodeURIComponent(q)}`
+                : `/user/vegetables?search=${encodeURIComponent(q)}`;
+
+        window.location.href = url;
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+
+    // -------------------------
+    // Live dropdown search
+    // -------------------------
     input.addEventListener('input', () => {
         clearTimeout(debounceTimer);
 
@@ -31,12 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         debounceTimer = setTimeout(async () => {
             try {
-                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+                const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`, {
+            headers: {'Accept': 'application/json'}, // <-- add this
+            credentials: 'include'
+            
+        });
                 const data = await res.json();
 
                 dropdown.innerHTML = '';
 
-                if (data.length === 0) {
+                if (!data.length) {
                     dropdown.innerHTML = `
                         <div class="list-group-item text-muted">
                             No results found
@@ -50,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         dropdown.innerHTML += `
                             <a href="${url}"
-                                class="list-group-item list-group-item-action">
+                               class="list-group-item list-group-item-action">
                                 ${item.name}
                                 <small class="text-muted">(${item.category})</small>
                             </a>`;
@@ -58,18 +96,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 dropdown.style.display = 'block';
-
             } catch (e) {
                 console.error(e);
             }
-        }, 350); // debounce
+        }, 350);
     });
 
-    // Hide dropdown when clicking outside
+    // -------------------------
+    // Hide dropdown on outside click
+    // -------------------------
     document.addEventListener('click', e => {
-        if (!e.target.closest('#global-search')) {
+        if (
+            !e.target.closest('#global-search') &&
+            !e.target.closest('#search-dropdown')
+        ) {
             dropdown.style.display = 'none';
         }
     });
 });
-

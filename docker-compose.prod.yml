@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: online_shop:prod
+    container_name: online_shop_prod_container
+    restart: always
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+    expose:
+      - "9000"
+    networks:
+      - online_shop_prod_network
+
+  web:
+    image: nginx:alpine
+    container_name: online_shop_webserver_prod_container
+    restart: always
+    ports:
+      - "6163:80"
+    depends_on:
+      - app
+    volumes:
+      - ./docker-compose-prod/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - online_shop_prod_network
+
+networks:
+  online_shop_prod_network:
+    driver: bridge

@@ -1,25 +1,9 @@
 <x-app-layout>
-    <x-slot name="title">order completed</x-slot>
+    <x-slot name="title">Order Completed</x-slot>
 
     @include('partials.navbar')
-    
-    {{-- Flash message --}}
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="container page-content">
-        <h3 class="text-success mb-3">order completed</h3>
 
                @forelse($orders as $order)
             <div class="card mb-4 shadow-sm">

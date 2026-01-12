@@ -7,12 +7,20 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use illuminate\support\facades\Gate;
 
 class CartController extends Controller
 {
 
     //add to cart
     public function addToCart(Request $request, $productId){
+
+    // Block preview customer mode for security cannot add to cart
+    if (Gate::allows('viewAsCustomer')) {
+
+        return redirect()->back()->with('error', 'Preview mode: cannot add to cart.');
+    
+    }
 
         $user = Auth::user();
 

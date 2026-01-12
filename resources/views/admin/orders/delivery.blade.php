@@ -2,10 +2,6 @@
 
 <x-slot name="title">Delivery</x-slot>
 
-<x-slot name="header">
-    <h4 class="text-center text-success">Delivery Details</h4>
-</x-slot>
-
 <div class="container mt-3">
 
         <p>

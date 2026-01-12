@@ -2,11 +2,7 @@
 
 <x-slot name="title">Product List</x-slot>
 
-<x-slot name="header">
-    <h4 class="text-center text-success">Product Management</h4>
-</x-slot>
-
-<div class="container mt-4">
+<div class="container">
     <h4 class="mb-4 text-dark">Products List</h4>
     <a href="{{ route('admin.products.create') }}" class="btn btn-outline-success mb-3">Add Product</a>
     @if(session('success'))

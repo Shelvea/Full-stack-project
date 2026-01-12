@@ -11,6 +11,9 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import './notifications';
 import './search';
 
+import { initSanctum } from './sanctum';
+await initSanctum();
+
 createInertiaApp({
   title: title => `${title} | FreshMart`,
   resolve: name => {

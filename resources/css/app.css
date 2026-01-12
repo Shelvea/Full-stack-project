@@ -152,6 +152,11 @@ footer {
   max-width: 80%; /* optional, to keep it responsive */
 }
 
+#ViewCustomerSidebar{
+    width: 250px;   /* change this to any size */
+    max-width: 80%; /* optional, to keep it responsive */
+}
+
 /*back button on create product form*/
 .custom-hover{
     transition: 0.3s; /* smooth hover effect */
@@ -226,7 +231,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* Push the page content down below both navbars */
 .page-content {
-    margin-top: 140px; /* height of both navbars combined */
+    margin-top: 50px; /* height of both navbars combined */
 }
 
 .second-navbar .nav-link {
@@ -300,17 +305,17 @@ input[type=number]::-webkit-outer-spin-button {
 
 /* Transparent dropdown */
 .profile-dropdown {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.8);
     border: 1px solid rgba(0,0,0,0.08);
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
     
 .profile-dropdown .dropdown-item {
-    color: #212529;
+    color: #ffffff;
 }
 
 .profile-dropdown .dropdown-item:hover {
-    background-color: #1987541a;
+    background-color: #198754;
 }
 
 .second-navbar .nav-link.active {

@@ -6,18 +6,8 @@
 
 <x-slot name="title">Order List</x-slot>
 
-<x-slot name="header">
-    <h4 class="text-center text-success">Order Management</h4>
-</x-slot>
+<div class="container">
 
-<div class="container mt-4">
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    
     <table class="table table-hover">
         <thead class="table-light text-center">
                 <tr>

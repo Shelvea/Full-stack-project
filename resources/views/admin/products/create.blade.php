@@ -1,12 +1,8 @@
 <x-app-layout>
 
-<x-slot name="title">Add Product</x-slot>
+<x-slot name="title">Add Product</x-slot>    
 
-<x-slot name="header">
-    <h4 class="text-center text-success">Product Management</h4>
-</x-slot>    
-
-<div class="container mt-4">
+<div class="container">
     <div class="row">
         <div class="col-md-6 offset-3">
             

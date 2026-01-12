@@ -51,7 +51,10 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function(){
     Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
     //admin update order status
     Route::put('/orders/{orderId}/status', [OrderController::class, 'updateStatus']);
-
+    //preview customer dashboard
+    Route::post('/previewCustomerDashboard', [AdminController::class, 'viewCustomerDashboard'])->name('admin.previewCustomerDashboard');
+    //exit from preview customer dashboard
+    Route::post('/exitPreviewCustomerDashboard', [AdminController::class, 'exitCustomerPreview'])->name('admin.exitCustomerDashboard');
 });
 
 //User routes group

@@ -1,27 +1,11 @@
 <x-app-layout>
-    <x-slot name="title">pending shipment</x-slot>
+    <x-slot name="title">Pending Shipment</x-slot>
 
     @include('partials.navbar')
-     
-    {{-- Flash message --}}
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="container page-content">
-        <h3 class="text-success mb-3">pending shipment</h3>
 
-         @forelse($orders as $order)
+        @forelse($orders as $order)
             <div class="card mb-4 shadow-sm">
                 <div class="card-header"> 
                     <span class="text-muted ms-2">{{ $order->created_at->format('Y-m-d H:i') }}</span>

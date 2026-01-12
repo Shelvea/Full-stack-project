@@ -27,7 +27,7 @@
 
         <!-- Page Heading -->
         @isset($header)
-            <header class="bg-light shadow-sm">
+            <header class="bg-light shadow-sm pt-5">
                 <div class="container py-2">
                     {{ $header }}
                 </div>
@@ -35,7 +35,8 @@
         @endisset
 
         <!-- Page Content -->
-        <main class="container">
+        <main class="container mt-5 pt-5">
+            @include('layouts.alert')
             {{ $slot }}
         </main>
     </div>
@@ -50,6 +51,20 @@
             const myModal = new bootstrap.Modal(myModalEl);
             myModal.show();
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        // Select all Bootstrap alerts
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            // Auto dismiss after 3 seconds (3000ms)
+            setTimeout(() => {
+                // Use Bootstrap's alert instance to close it
+                const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+                bsAlert.close();
+            }, 3000);
+        });
+    });
     </script>
     @stack('scripts') <!-- stack for page-specific scripts -->
 </body>

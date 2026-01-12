@@ -1,0 +1,72 @@
+# =========================
+# 1. Frontend build stage
+# =========================
+FROM node:20-alpine AS frontend
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY resources resources
+COPY vite.config.js ./
+RUN npm run build
+
+
+# =========================
+# 2. Backend build stage
+# =========================
+FROM composer:2 AS backend
+
+WORKDIR /app
+
+# Copy composer files first for caching
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies (no scripts yet)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Copy the full application
+COPY . .
+
+
+# =========================
+# 3. Production runtime
+# =========================
+FROM php:8.4-fpm-alpine
+
+# System deps + PHP extensions
+RUN apk add --no-cache \
+    icu-dev \
+    libzip-dev \
+    libpng-dev \
+    libxml2-dev \
+    oniguruma-dev \
+    bash \
+    curl \
+    $PHPIZE_DEPS \
+    && docker-php-ext-install \
+        pdo_mysql \
+        bcmath \
+        intl \
+        zip \
+        opcache \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del $PHPIZE_DEPS
+
+WORKDIR /var/www
+
+# Copy backend code
+COPY --from=backend --chown=www-data:www-data /app /var/www
+
+# Copy built frontend assets
+COPY --from=frontend /app/public/build /var/www/public/build
+
+# Laravel permissions
+RUN chmod -R 775 storage bootstrap/cache
+
+USER www-data
+
+EXPOSE 9000
+CMD ["php-fpm"]

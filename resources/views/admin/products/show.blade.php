@@ -2,11 +2,7 @@
     
     <x-slot name="title">Product Details</x-slot>
 
-    <x-slot name="header">
-        <h4 class="text-center text-success">Product Management</h4>
-    </x-slot>
-
-<div class="container mt-4">
+<div class="container">
     <div class="row">
         <div class="col-md-6 offset-3">
             <h4>Product Details</h4>

@@ -3,21 +3,6 @@
     <x-slot name="title">Your Order</x-slot>
 
     @include('partials.navbar')
-    
-    {{-- Flash message --}}
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="container page-content">
         <h3 class="text-success mb-3">Your Orders</h3>

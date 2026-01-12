@@ -34,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('is_user', function(User $user){
             return !$user->is_admin;
         });
+
+        Gate::define('viewAsCustomer', function ($user) {
+            return $user->is_admin && session('as_customer') === true;
+        });
+
     }
 }

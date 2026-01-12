@@ -6,6 +6,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\SearchController;
 
 //lalamove estimate delivery fee and distance
 Route::post('/lalamove/estimate', [LalamoveController::class, 'estimate'])->name('lalamove.estimate');//incorrect, no named route in api.php
@@ -29,5 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {//protected endpoint api u
     //mark as read view order-placed details in notification
     Route::post('/notifications/{id}/read', [NotificationController::class, 'read']);
 
-
+    //search product
+    Route::get('/search', [SearchController::class, 'search']);
 });

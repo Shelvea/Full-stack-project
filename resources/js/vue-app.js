@@ -4,6 +4,9 @@ import router from './router';
 import './notifications';
 import './search';
 
+import { initSanctum } from './sanctum';
+await initSanctum();
+
 const app = createApp(App);
 app.use(router);
 app.mount('#vue-app');

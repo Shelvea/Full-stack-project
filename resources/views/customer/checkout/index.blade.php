@@ -2,22 +2,7 @@
 
 <x-slot name="title">Checkout</x-slot>
 
-{{-- Flash message --}}
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-@if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
-<div class="container mt-4">
+<div class="container">
         <h3 class="text-success">Checkout</h3>
 
         {{-- Cart Items --}}
@@ -201,10 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
-
+            
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            
             const res = await fetch(lalamoveEndpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken },
                 body: JSON.stringify({ destination: dest, pickup: pickup, pickupAddress: vendorAddress, destAddress: address }),
                 signal: controller.signal
             });
