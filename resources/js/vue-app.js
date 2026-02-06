@@ -7,6 +7,10 @@ import './search';
 import { initSanctum } from './sanctum';
 await initSanctum();
 
+import Alert from '@/components/Alert.vue'// child component
+
 const app = createApp(App);
 app.use(router);
+
+app.component('Alert', Alert) // register globally
 app.mount('#vue-app');

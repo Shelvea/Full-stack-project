@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     //
+    use HasFactory;
+    
     protected $fillable = [
     'user_id',
     'status', 
@@ -55,4 +58,13 @@ class Order extends Model
 
         return $this->hasMany(Returns::class);
     }
+
+    public function scopePendingTransferPayment($query, $userId)
+    {
+        return $query
+            ->where('user_id', $userId)
+            ->where('payment_method', 'transfer')
+            ->where('status', 'pending payment');
+    }
+
 }

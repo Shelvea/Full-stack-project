@@ -70,7 +70,7 @@ class CartController extends Controller
     //Update quantity
     public function ajaxUpdate(Request $request, $itemId){
 
-        $item = CartItem::findOrFail($itemId);
+        $item = CartItem::with(['product', 'cart.cartItems.product'])->findOrFail($itemId);
         $quantity = max(1, (int)$request->quantity);
 
         $item->update(['quantity' => $quantity]);

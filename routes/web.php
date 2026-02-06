@@ -8,7 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\PaymentController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -25,23 +26,23 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 //Admin routes group
-Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function(){
+Route::prefix('admin')->middleware(['auth', 'verified','is_admin'])->group(function(){
     
     Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard');
     //display all products
-    Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
     // route to display the form for creating a product
-    Route::get('/products/create', [ProductController::class, 'create'])->name('admin.products.create');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('admin.products.create');
     //store a product in the products table
-    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('admin.products.store');
     //Show details of a specific product by ID
-    Route::get('/products/{product}', [ProductController::class, 'show'])->name('admin.products.show');
+    Route::get('/products/{product}', [AdminProductController::class, 'show'])->name('admin.products.show');
     //edit
-    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('admin.products.edit');
     //update an existing product
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
     //delete an existing product
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('admin.products.destroy');
     
     //manage orders - display all orders //viewing order page by route to order management page with highlight effect
     Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
@@ -62,9 +63,9 @@ Route::prefix('user')->middleware(['auth', 'verified'])->group(function(){
     
     Route::get('/dashboard', [UserController::class, 'Dashboard'])->name('dashboard');//auth middleware is pre-built middleware for check user has login or not, if user has not login it will redirect to login page    
 
-    Route::get('/fruits', [ProductController::class, 'fruits'])->name('products.fruits');
+    Route::get('/fruits', [CustomerProductController::class, 'fruits'])->name('products.fruits');
 
-    Route::get('/vegetables', [ProductController::class, 'vegetables'])->name('products.vegetables');
+    Route::get('/vegetables', [CustomerProductController::class, 'vegetables'])->name('products.vegetables');
 
     //cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');// view cart

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -109,31 +110,6 @@ class ProductController extends Controller
         //
         $product->delete();
         return redirect()->route('admin.products.index')->with('success','Product deleted successfully');
-    }
-
-    public function fruits(Request $request){
-
-        $search = $request->query('search');
-
-        $products = Product::where('category_id', 1)->when($search, function ($q) use ($search) {
-            $q->where('name', 'LIKE', "%{$search}%");
-        })
-        ->paginate(6)
-        ->withQueryString();
-
-        return view('customer.products.fruits', compact('products'));
-    }
-
-    public function vegetables(Request $request){
-        
-        $search = $request->query('search');
-
-        $products = Product::where('category_id', 2) ->when($search, function ($q) use ($search) {
-            $q->where('name', 'LIKE', "%{$search}%");
-        })->paginate(6)
-        ->withQueryString();
-
-        return view('customer.products.vegetables', compact('products'));
     }
 
 }

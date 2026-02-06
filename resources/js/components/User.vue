@@ -1,10 +1,11 @@
 <template>
   <div class="container pt-5 mt-5">
   
-    <div v-if="alert.message" class="alert" :class="alert.type"
-    role="alert">    
-  {{ alert.message }}
-  </div>
+  <Alert
+  :message="message"
+  :type="type"
+  @close="message = ''"
+  />
 
   <table class="table table-striped">
     <thead>
@@ -58,15 +59,15 @@
 <script setup>//composition api
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { useTitle } from '../utils/useTitle.js' 
+import { useTitle } from '../utils/useTitle.js'
+import { useAlert } from '@/useAlert' 
 
 const users = ref([])//ref() creates a reactive variable
-const alert = ref({
-  message: '',
-  type: ''
-})
+
 const selectedUser = ref(null)
 let deleteModal = null
+
+const { message, type, showSuccess, showError } = useAlert()
 
 onMounted(async () => {//same as mounted() in options api lifecycle hook
   useTitle('Users')
@@ -92,26 +93,16 @@ const confirmDelete = async () => {
       user => user.id !== selectedUser.value.id
     )
 
-      alert.value = {
-      message: res.data.message,
-      type: 'alert-success'
-    }
+    showSuccess(res.data.message)
 
     deleteModal.hide()
 
-    setTimeout(() => {
-      alert.value.message = ''
-    }, 3000)
 
   } catch (error) {
-    alert.value = {
-      message: error.response?.data?.message || 'Delete failed',
-      type: 'alert-danger'
-    }
+    showError(
+      error.response?.data?.message || 'Delete failed'
+  )
 
-    setTimeout(() => {
-      alert.value.message = ''
-    }, 3000)
   }
 }
 

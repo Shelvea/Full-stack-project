@@ -173,11 +173,19 @@ class CheckoutController extends Controller
             // Clear cart items
             $cart->cartItems()->delete();
         }
-        
+    
+    //eager load
+    $order->load('user');
+
     // Notify admin(s) - ORDER PLACED notification
     User::where('is_admin', true)
         ->each(function ($admin) use ($order) {
-        $admin->notify(new OrderPlaced($order));
+        $admin->notify(
+            new OrderPlaced(
+                $order->id,
+                $order->user->name
+            )
+        );
     });
 
         // Commit if everything succeeded

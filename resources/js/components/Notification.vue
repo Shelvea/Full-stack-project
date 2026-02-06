@@ -2,19 +2,12 @@
     <div class="container pt-5 mt-5">
         <h3>Notifications</h3>
 
-        <!-- ✅ SUCCESS ALERT -->
-    <div
-        v-if="successMessage"
-        class="alert alert-success alert-dismissible fade show"
-        role="alert"
-    >
-    <strong>Success!</strong> {{ successMessage }}
-    <button
-        type="button"
-        class="btn-close"
-        @click="successMessage = ''"
-    ></button>
-    </div>
+        <!-- ALERT -->
+    <Alert
+    :message="message"
+    :type="type"
+    @close="message = ''"
+    />
 
         <div v-if="loading">
             Loading notifications...
@@ -59,20 +52,16 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useTitle } from '../utils/useTitle.js' 
+import { useAlert } from '@/useAlert'
+
 
 const notifications = ref([])
 const loading = ref(true)
-const successMessage = ref('')
+
+const { message, type, showSuccess, showError } = useAlert()
 
 const formatTime = (date) => {
     return new Date(date).toLocaleString()
-}
-
-const showSuccess = (msg) => {
-    successMessage.value = msg
-    setTimeout(() => {
-    successMessage.value = ''
-    }, 3000)
 }
 
 const viewOrder = async (notification) => {
@@ -96,8 +85,9 @@ const deleteNotification = async (id) => {
     showSuccess(res.data.message)
     
     } catch (error) {
+        showError('Delete failed')
 
-        console.error('Delete failed:', error)
+        console.error(error)
     }
 }
 

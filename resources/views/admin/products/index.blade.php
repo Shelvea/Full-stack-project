@@ -5,12 +5,7 @@
 <div class="container">
     <h4 class="mb-4 text-dark">Products List</h4>
     <a href="{{ route('admin.products.create') }}" class="btn btn-outline-success mb-3">Add Product</a>
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+
     <table class="table table-bordered table-success table-striped">
         <thead>
             <tr>

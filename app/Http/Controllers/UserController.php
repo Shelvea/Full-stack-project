@@ -27,6 +27,17 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+    
+        // Must be authenticated (Sanctum handles this)
+        $authUser = auth()->user();
+
+        //  Must be admin
+        if (!$authUser->is_admin) {
+            return response()->json([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
         //user detail
         $user = User::find($id);
 
@@ -34,6 +45,13 @@ class UserController extends Controller
 
             return response()->json(
                 ['message' => 'User Not Found.'], 404);
+        }
+
+         // Prevent admin deleting self
+        if ($user->id === $authUser->id) {
+            return response()->json([
+                'message' => 'You cannot delete your own account.'
+            ], 403);
         }
 
         //Delete user

@@ -21,6 +21,7 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    
     public function definition(): array
     {
         return [
@@ -35,10 +36,27 @@ class UserFactory extends Factory
     /**
      * Indicate that the model's email address should be unverified.
      */
+    
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
+
+    // database/factories/UserFactory.php
+    public function admin(): static
+    {
+        return $this->state(fn () => [
+            'is_admin' => true,
+        ]);
+    }
+
+    public function user(): static
+    {
+        return $this->state(fn () => [
+            'is_admin' => false,
+        ]);
+    }
+
 }

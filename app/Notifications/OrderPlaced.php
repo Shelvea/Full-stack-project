@@ -13,15 +13,17 @@ class OrderPlaced extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected Order $order;
+    protected int $orderId;
+    protected string $customerName;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(Order $order)
+    public function __construct(int $orderId, string $customerName)
     {
         //
-        $this->order = $order;
+        $this->orderId = $orderId;
+        $this->customerName = $customerName;
     }
 
     /**
@@ -42,8 +44,8 @@ class OrderPlaced extends Notification implements ShouldQueue
         return [
 
             'message'  => 'New order placed',
-            'order_id' => $this->order->id,
-            'customer_name' => $this->order->user->name,
+            'order_id' => $this->orderId,
+            'customer_name' => $this->customerName,
         
         ];
     }

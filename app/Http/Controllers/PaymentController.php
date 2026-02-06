@@ -13,10 +13,8 @@ class PaymentController extends Controller
     //
     public function index(){
         
-        $orders = Order::with('orderItems.product')
-        ->where('user_id', auth()->id())
-        ->where('payment_method','transfer')
-        ->where('status','pending payment')
+        $orders = Order::pendingTransferPayment(auth()->id())
+        ->with('orderItems.product')
         ->orderByDesc('created_at')
         ->paginate(5);
 

@@ -6,7 +6,13 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
+use App\Interfaces\Services\OrderServiceInterface;
+use App\Services\OrderService;
+use App\Repositories\OrderRepository;
+use App\Interfaces\Repositories\AdminOrderRepositoryInterface;
+use App\Interfaces\Repositories\UserOrderRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +22,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->bind(OrderServiceInterface::class, OrderService::class);
+
+        $this->app->bind(AdminOrderRepositoryInterface::class, OrderRepository::class);
+
+        $this->app->bind(UserOrderRepositoryInterface::class, OrderRepository::class);
+
     }
 
     /**
@@ -38,6 +50,20 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('viewAsCustomer', function ($user) {
             return $user->is_admin && session('as_customer') === true;
         });
+
+        if (app()->isLocal()) {
+        Model::preventLazyLoading();
+
+        Model::handleLazyLoadingViolationUsing(function (Model $model, string $relation) {
+            logger()->warning(
+                "Lazy loading detected",
+                [
+                    'model' => $model::class,
+                    'relation' => $relation,
+                ]
+            );
+        });
+        }
 
     }
 }

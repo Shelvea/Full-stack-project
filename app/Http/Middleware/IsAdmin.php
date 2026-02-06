@@ -20,7 +20,6 @@ class IsAdmin
             return $next($request);
         }
 
-        // If not admin, redirect to previous page or root home
-        return redirect()->back();
+        abort(Response::HTTP_FORBIDDEN); // 403
     }
 }
