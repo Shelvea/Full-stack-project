@@ -7,7 +7,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Include your app.css -->
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
+    @vite(['resources/js/vue-app.js', 'resources/css/app.css'])
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -63,7 +63,7 @@
                         @guest
                         <!-- Show when NOT logged in -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}" style="color: white; font-weight: bold;">Login</a>
+                            <a class="nav-link" href="{{ route('app', ['any' => 'login']) }}" style="color: white; font-weight: bold;">Login</a>
                         </li>
                         @if (Route::has('register'))
 
@@ -71,16 +71,18 @@
                         <li class="nav-item d-flex align-items-center text-white mx-2">|</li>
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}" style="color: white; font-weight: bold;">Register</a>
+                                <a class="nav-link" href="{{ route('app', ['any' => 'register']) }}" style="color: white; font-weight: bold;">Register</a>
                             </li>
                         @endif
                     @else
                         <!-- Show when logged in -->
+                        <!--
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ url('/app/dashboard') }}">Dashboard</a>
                         </li>
+                        -->
                         <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            <form action="{{ route('handle.logout') }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-link nav-link">Logout</button>
                             </form>

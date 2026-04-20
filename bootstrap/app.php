@@ -34,7 +34,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // ... other api middleware (throttle:api, SubstituteBindings, etc.)
     ]);
 
-
+        $middleware->statefulApi();
+    
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

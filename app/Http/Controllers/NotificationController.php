@@ -30,6 +30,8 @@ class NotificationController extends Controller
 
     public function destroy($id)
     {
+        try{
+
         $notification = auth()->user()
         ->notifications()
         ->where('id', $id)
@@ -40,6 +42,11 @@ class NotificationController extends Controller
         return response()->json([
         'message' => 'Notification deleted successfully'
     ]);
+
+        }catch(\Exception $e){
+
+            return response()->json(['message' => 'Failed to delete notification'], 500);
+        }
     
     }
 }

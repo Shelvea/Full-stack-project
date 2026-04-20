@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     <div class="container">
         <!-- Logo -->
-        <a class="navbar-brand" href="{{ route('dashboard') }}">
+        <a class="navbar-brand" href="{{ url('/app/dashboard') }}">
             <x-application-logo style="height: 32px; width:auto;" />
         </a>
 
@@ -16,9 +16,9 @@
             <!-- Left Side -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <x-nav-link :active="request()->routeIs('dashboard')" :href="route('dashboard')">
+                    <a class="nav-link" href="{{ url('/app/dashboard') }}">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </a>
                 </li>
             </ul>
 
@@ -36,7 +36,7 @@
                         </x-dropdown-link>
 
                         <!-- Logout -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('handle.logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault(); this.closest('form').submit();">

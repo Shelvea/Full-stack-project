@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export async function initSanctum() {
-    await fetch('/sanctum/csrf-cookie', { credentials: 'include' });
+    await axios.get('/sanctum/csrf-cookie', { withCredentials: true });
 }

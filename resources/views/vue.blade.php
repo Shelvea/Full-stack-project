@@ -20,17 +20,12 @@
     
 </head>
 <body>
-
-    @include('layouts.dash-navigation')
     
-    <div class="min-vh-100 bg-light pb-2" id="vue-app">
+    <div class="d-flex flex-column min-vh-100 bg-light pb-2" id="vue-app">
     
-    
-    
-
+        
     </div>
-
-    @include('layouts.footer')
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script>

@@ -15,8 +15,11 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::orderByDesc('created_at')->paginate(5);
-        return view('admin.products.index', compact('products'));
+        $products = Product::with('category')
+        ->orderByDesc('created_at')->paginate(5);
+        //return view('admin.products.index', compact('products'));
+        
+        return response()->json($products);
     }
 
     /**
@@ -52,7 +55,11 @@ class ProductController extends Controller
         //create product, use laravel's eloquent create method on the product model
         Product::create($validated);//create a new record inside database table
         
-        return redirect()->route('admin.products.index')->with('success','Product added successfully');//redirect user to previous page and display flash message
+        //return redirect()->route('admin.products.index')->with('success','Product added successfully');//redirect user to previous page and display flash message
+    
+        return response()->json([
+            'message' => 'Product added successfully'
+        ]);
     }
 
     /**
@@ -61,10 +68,10 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
-        // Get the page number from query string (?page=3), default to 1 if not present
-        $page = request()->get('page', 1);
-
-        return view('admin.products.show', compact('product','page'));
+        return response()->json([ 
+            
+            'product' => $product->load('category') 
+        ]);
     }
 
     /**
@@ -98,8 +105,10 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('admin.products.index')->with('success','Product updated successfully');
-    
+        //return redirect()->route('admin.products.index')->with('success','Product updated successfully');
+        return response()->json([
+            'message' => 'Product updated successfully'
+        ]);
     }
 
     /**
@@ -109,7 +118,10 @@ class ProductController extends Controller
     {
         //
         $product->delete();
-        return redirect()->route('admin.products.index')->with('success','Product deleted successfully');
-    }
+        //return redirect()->route('admin.products.index')->with('success','Product deleted successfully');
+        return response()->json([
+            'message' => 'product deleted successfully'
+        ]);
+        }
 
 }

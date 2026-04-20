@@ -11,8 +11,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\Services\OrderServiceInterface;
 use App\Services\OrderService;
 use App\Repositories\OrderRepository;
+use App\Repositories\ProductRepository;
 use App\Interfaces\Repositories\AdminOrderRepositoryInterface;
+use App\Interfaces\Repositories\CartRepositoryInterface;
 use App\Interfaces\Repositories\UserOrderRepositoryInterface;
+use App\Interfaces\Repositories\ProductRepositoryInterface;
+use App\Interfaces\Services\CartServiceInterface;
+use App\Repositories\CartRepository;
+use App\Services\CartService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AdminOrderRepositoryInterface::class, OrderRepository::class);
 
         $this->app->bind(UserOrderRepositoryInterface::class, OrderRepository::class);
+
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+
+        $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
+
+        $this->app->bind(CartServiceInterface::class, CartService::class);
 
     }
 

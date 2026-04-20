@@ -26,7 +26,7 @@ class CheckoutController extends Controller
         if($cart){
             foreach($cart->cartItems as $item){
 
-                $subtotal += $item->product->price * $item->quantity; 
+                $subtotal += $item->product->price * $item->quantity;
             }
         }
 
@@ -191,15 +191,22 @@ class CheckoutController extends Controller
         // Commit if everything succeeded
         DB::commit();
         
-        return redirect()->route('order.success');
+        //return redirect()->route('order.success');
+        return response()->json([
+            'message' => 'Thank you! Your order has been placed.',
+            'type' => 'success',
+        ], 200);
     
     } catch (\Exception $e) {
         
         // Rollback all DB changes
         DB::rollBack();
         Log::error('Order placement failed: ' . $e->getMessage());
-        return back()->with('error', 'Something went wrong. Please try again.');
-    
+        //return back()->with('error', 'Something went wrong. Please try again.');
+        return response()->json([
+            'message' => 'Order placement failed: Something went wrong. Please try again.',
+            'type' => 'error',
+        ], 500);
     }
         
     }

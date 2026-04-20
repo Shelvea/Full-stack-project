@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+//separation of concerns between logic(useAlert.js) and ui (Alert.vue)
 
 import { computed } from 'vue'
 

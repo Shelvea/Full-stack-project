@@ -1,5 +1,4 @@
 <template>
-  <div class="container pt-5 mt-5">
   
   <Alert
   :message="message"
@@ -53,13 +52,12 @@
   </div>
 </div>
 
-  </div>
 </template>
 
 <script setup>//composition api
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { useTitle } from '../utils/useTitle.js'
+import { useTitle } from '@/utils/useTitle.js'
 import { useAlert } from '@/useAlert' 
 
 const users = ref([])//ref() creates a reactive variable

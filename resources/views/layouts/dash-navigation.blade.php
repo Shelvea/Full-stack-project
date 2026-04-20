@@ -1,5 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-success border-bottom fixed-top">
-    
+<nav class="navbar navbar-expand-lg navbar-light bg-success border-bottom fixed-top">    
     <!-- Hamburger button for sidebar -->
     @if(Gate::allows('viewAsCustomer'))
         <button class="btn btn-light me-2 ms-3 btn-ham" type="button" data-bs-toggle="offcanvas" data-bs-target="#ViewCustomerSidebar" aria-controls="ViewCustomerSidebar">
@@ -20,12 +19,13 @@
     @endif
     
     <div class="container">        
+        
         <!-- Toggler (hamburger) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             
@@ -57,11 +57,11 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                 <!-- Dropdown User -->
-                
+                    
                     <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#">
                                 {{ Auth::user()->name }}                        
                     </a>
-
+                        
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end profile-dropdown">
                         <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
                         <!-- Logout -->
@@ -92,6 +92,7 @@
 
         </div>
     </div>
+    
 </nav>
 
 @can('is_user')
